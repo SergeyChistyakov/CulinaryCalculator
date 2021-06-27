@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="DataToSeed\cookies.jpg" />
+		<None Remove="DataToSeed\meatpie.jpg" />
+		<None Remove="DataToSeed\Recipe1.jpg" />
+		<None Remove="DataToSeed\сakes.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="DataToSeed\cookies.jpg" />
+		<EmbeddedResource Include="DataToSeed\meatpie.jpg" />
+		<EmbeddedResource Include="DataToSeed\сakes.jpg" />
+		<EmbeddedResource Include="DataToSeed\Recipe1.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.15" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="Xamarin.Forms.Core">
+			<HintPath>..\..\..\..\..\..\Microsoft\Xamarin\NuGet\xamarin.forms\4.8.0.1451\lib\netstandard2.0\Xamarin.Forms.Core.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="DataToSeed\Recipe1.jpg" />
+	</ItemGroup>
+
+</Project>
