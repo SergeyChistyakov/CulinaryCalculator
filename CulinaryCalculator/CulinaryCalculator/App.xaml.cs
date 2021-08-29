@@ -9,8 +9,9 @@ namespace CulinaryCalculator
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new MainPage());
+            var mainViewModel = new MainPageViewModel(MainPage.Navigation);
+            MainPage.BindingContext = mainViewModel;
         }
 
         protected override void OnStart()

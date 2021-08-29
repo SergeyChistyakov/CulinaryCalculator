@@ -12,4 +12,17 @@ namespace CulinaryCalculator.Model
 
         public List<Recipe> Recipes { get; set; } = new List<Recipe>();
     }
+
+    public class CategoryIdEqualityComparer : IEqualityComparer<Category>
+    {
+        public bool Equals(Category x, Category y)
+        {
+            return x != null && y != null && x.Id == y.Id;
+        }
+
+        public int GetHashCode(Category obj)
+        {
+            return obj?.Id ?? 0;
+        }
+    }
 }

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CulinaryCalculator.Pages.EditCategory">
+    <ContentPage.Content>
+        <Grid Margin="10,0,10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Text="Название категории"/>
+                <Entry Grid.Row="1" Text="{Binding Title}"/>
+                <Button Grid.Row="2" Text="Выберите картинку"/>
+            </Grid>
+
+            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="End">
+                <Button Command="{Binding Save}" Text="Сохранить"/>
+                <Button Command="{Binding Cancel}" Text="Отмена"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

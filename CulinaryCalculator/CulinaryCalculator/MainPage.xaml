@@ -1,24 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CulinaryCalculator.MainPage">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Label Grid.Row="0" Text="Здесь будет панель-фунционал" HorizontalTextAlignment="Center" FontSize="36"/>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Text="+ Категорию"/>
-            <Button Grid.Column="1" Text="+ Рецепт"/>
-            <Button Grid.Column="2" Text="Настройки"/>
-            <Button Grid.Column="3" Text="Фильтр"/>
-        </Grid>
-    </Grid>
+             xmlns:culinarycalculator="clr-namespace:CulinaryCalculator"
+             xmlns:views="clr-namespace:CulinaryCalculator.Views"
+             x:Class="CulinaryCalculator.MainPage"
+             ControlTemplate="{StaticResource MainPageTemplate}">
+    <views:Categories BindingContext="{Binding Categories}"/>
 </ContentPage>

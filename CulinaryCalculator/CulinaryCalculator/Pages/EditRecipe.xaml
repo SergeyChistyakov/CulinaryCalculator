@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CulinaryCalculator.Pages.EditRecipe">
+    <ContentPage.Content>
+        <Grid Margin="10,0,10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="End">
+                <Button Command="{Binding Save}" Text="Сохранить"/>
+                <Button Command="{Binding Cancel}" Text="Отмена"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

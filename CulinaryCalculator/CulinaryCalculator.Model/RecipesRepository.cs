@@ -11,6 +11,8 @@ namespace CulinaryCalculator.Model
     {
         static readonly string RecipesDBPath;
 
+        public static event EventHandler<Category> CategoryAdded;
+
         static RecipesRepository()
         {
             var fileName = "Recipes.db";
@@ -31,6 +33,7 @@ namespace CulinaryCalculator.Model
                 db.Categories.Add(category);
                 db.SaveChanges();
             }
+            CategoryAdded?.Invoke(null, category);
         }
 
         public static List<Category> GetCategories()
@@ -72,7 +75,7 @@ namespace CulinaryCalculator.Model
         {
             using (var db = new RecipesContext(RecipesDBPath))
             {
-                return db.Recipes.ToList();
+                return db.Recipes.Include(r => r.Category).ToList();
             }
         }
 

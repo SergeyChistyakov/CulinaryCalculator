@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:CulinaryCalculator.Model;assembly=CulinaryCalculator.Model"
+             xmlns:infrastructure="clr-namespace:CulinaryCalculator.Infrastructure"
+             xmlns:local ="clr-namespace:CulinaryCalculator.Views"
+             x:Class="CulinaryCalculator.Views.Categories">
+    <ContentView.Resources>
+        <infrastructure:ByteArrayToImageSourceConverter x:Key="ImageSourceConverter"/>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <StackLayout>
+            <Label Style="{StaticResource Header1Label}" Text="{Binding Label}" />
+            <CollectionView ItemsSource="{Binding Categories}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,0,0,4">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                              Command="{Binding Path=BindingContext.SelectCategory, Source={RelativeSource AncestorType={x:Type local:Categories}}}"
+                                                              CommandParameter="{Binding Id}"/>
+                            </Grid.GestureRecognizers>
+                            <Frame CornerRadius="20" Padding="0" IsClippedToBounds="True">
+                                <Image Aspect="AspectFit" Source="{Binding Image, Converter={StaticResource ImageSourceConverter}}"/>
+                            </Frame>
+                            <Label VerticalOptions="End" Margin="10" Style="{StaticResource Header2Label}" Text="{Binding Title}"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>
