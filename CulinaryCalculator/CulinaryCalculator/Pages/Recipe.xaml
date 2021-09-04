@@ -16,7 +16,10 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Style="{StaticResource Header1Label}" Text="{Binding Label}" />
+            <StackLayout Orientation="Horizontal">
+                <Label Style="{StaticResource Header1Label}" Text="{Binding Label}" />
+                <Button Text="Отправить" Margin="5" Command="{Binding SendRecipe}" HorizontalOptions="Start"/>
+            </StackLayout>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

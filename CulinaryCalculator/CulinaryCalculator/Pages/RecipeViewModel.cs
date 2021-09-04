@@ -1,8 +1,15 @@
 ﻿using CulinaryCalculator.Infrastructure;
+using Syncfusion.Drawing;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using Syncfusion.Pdf.Tables;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using Model = CulinaryCalculator.Model;
@@ -52,6 +59,8 @@ namespace CulinaryCalculator.Pages
 
         public ICommand ShowIngredients { get; }
 
+        public ICommand SendRecipe { get; }
+
         private bool m_IngredientsAreVisible;
         public bool IngredientsAreVisible
         {
@@ -87,6 +96,108 @@ namespace CulinaryCalculator.Pages
             });
 
             Recalculate = new PropertyDependentCommand(this, _ => true, parameter => DoRecalculate(parameter));
+
+            SendRecipe = new PropertyDependentCommand(this, _ => true, _ => DoSendRecipe());
+        }
+
+        private async void DoSendRecipe()
+        {
+            PdfDocument document = new PdfDocument();
+            PdfFont fontForLabel = new PdfCjkStandardFont(PdfCjkFontFamily.HanyangSystemsShinMyeongJoMedium, 20);
+            PdfFont font = new PdfCjkStandardFont(PdfCjkFontFamily.HanyangSystemsShinMyeongJoMedium, 14);
+            float yPosition = 0;
+
+            // page 1
+            PdfPage page = document.Pages.Add();
+            page.Graphics.DrawString(Label, fontForLabel, PdfBrushes.Black, new PointF(0, yPosition));
+            yPosition += 30;
+
+            using (var ms = new MemoryStream(Image))
+            {
+                PdfBitmap bitmap = new PdfBitmap(ms);
+                page.Graphics.DrawImage(bitmap, 0, yPosition);
+                yPosition += bitmap.Height / 1.2f;
+            }
+
+            PdfTextElement element = new PdfTextElement(Description);
+
+            element.Brush = new PdfSolidBrush(Color.Black);
+            element.Font = font;
+
+            PdfLayoutFormat layoutFormat = new PdfLayoutFormat();
+            layoutFormat.Break = PdfLayoutBreakType.FitPage;
+
+            PdfStringFormat format = new PdfStringFormat();
+            format.Alignment = PdfTextAlignment.Left;
+            format.LineAlignment = PdfVerticalAlignment.Top;
+            element.StringFormat = format;
+
+            RectangleF bounds = new RectangleF(0, yPosition, page.Graphics.ClientSize.Width, page.Graphics.ClientSize.Height - yPosition);
+            element.Draw(page, bounds, layoutFormat);
+
+
+            // table style
+            PdfCellStyle cellStyle = new PdfCellStyle();
+            cellStyle.BorderPen = new PdfPen(Color.LightGray, 0.1f);
+            PdfLightTableStyle pdfLightTableStyle = new PdfLightTableStyle();
+            pdfLightTableStyle.DefaultStyle = cellStyle;
+            pdfLightTableStyle.DefaultStyle.Font = font;
+            pdfLightTableStyle.CellPadding = 4;
+            pdfLightTableStyle.BorderPen = new PdfPen(Color.LightGray, 0.1f);
+
+            // page 2
+            PdfPage page2 = document.Pages.Add();
+            page2.Graphics.DrawString("Шаги", fontForLabel, PdfBrushes.Black, new PointF(0, 0));
+            yPosition = 30;
+
+            PdfLightTable pdfLightTable = new PdfLightTable();
+            pdfLightTable.Style = pdfLightTableStyle;
+
+            DataTable table = new DataTable();
+            table.Columns.Add("№");
+            table.Columns.Add("Шаг");
+            var orderedSteps = RecipeSteps.OrderBy(s => s.Number).ToList();
+            for (int i = 0; i < orderedSteps.Count; i++)
+            {
+                table.Rows.Add(new string[] { (i + 1).ToString(), orderedSteps[i].Description });
+            }
+            pdfLightTable.DataSource = table;
+            pdfLightTable.Columns[0].Width = 30;
+            pdfLightTable.Draw(page2, new PointF(0, yPosition));
+
+            // page 3
+            PdfPage page3 = document.Pages.Add();
+            page3.Graphics.DrawString("Ингридиенты", fontForLabel, PdfBrushes.Black, new PointF(0, 0));
+            yPosition = 30;
+
+            PdfLightTable pdfLightTable2 = new PdfLightTable();
+            pdfLightTable2.Style = pdfLightTableStyle;
+
+            DataTable table2 = new DataTable();
+            table2.Columns.Add("№");
+            table2.Columns.Add("Ингридиент");
+            table2.Columns.Add("Количество");
+            var converter = new UnitOfMeasureConverter();
+            var orderedIngredients = RecipeIngredients.OrderBy(i => i.Title).ToList();
+            for (int i = 0; i < orderedIngredients.Count; i++)
+            {
+                table2.Rows.Add(new string[] {
+                    (i+1).ToString(),
+                    orderedIngredients[i].Title,
+                    $"{orderedIngredients[i].Quantity.ToString()} {converter.Convert(orderedIngredients[i].Unit, typeof(string), null, CultureInfo.CurrentCulture)}",
+                    
+                });
+            }
+            pdfLightTable2.DataSource = table2;
+            pdfLightTable2.Columns[0].Width = 30;
+            pdfLightTable2.Columns[2].Width = 100;
+            pdfLightTable2.Draw(page3, new PointF(0, yPosition));
+
+            MemoryStream stream = new MemoryStream();
+            document.Save(stream);
+            document.Close(true);
+
+            await Xamarin.Forms.DependencyService.Get<ISave>().SavePdf("Output.pdf", stream);
         }
 
         private void DoRecalculate(object parameter)
