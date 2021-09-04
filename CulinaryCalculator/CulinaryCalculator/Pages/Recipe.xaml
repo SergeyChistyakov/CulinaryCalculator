@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:infrastructure="clr-namespace:CulinaryCalculator.Infrastructure"
+             x:Class="CulinaryCalculator.Pages.Recipe"
+             x:Name="RecipePage"
+             xmlns:local ="clr-namespace:CulinaryCalculator.Pages" xmlns:behaviors="http://xamarin.com/schemas/2020/toolkit">
+    <ContentPage.Resources>
+        <infrastructure:ByteArrayToImageSourceConverter x:Key="ImageSourceConverter"/>
+        <infrastructure:UnitOfMeasureConverter x:Key="UnitOfMeasureConverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid Margin="10,0,10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Style="{StaticResource Header1Label}" Text="{Binding Label}" />
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Text="Описание" Command="{Binding ShowDescription}" HorizontalOptions="Start"/>
+                <Button Grid.Column="1" Text="Шаги" Command="{Binding ShowSteps}" HorizontalOptions="Center"/>
+                <Button Grid.Column="2" Text="Ингридиенты" Command="{Binding ShowIngredients}" HorizontalOptions="End"/>
+            </Grid>
+
+            <Grid Grid.Row="2" IsVisible="{Binding DescriptionIsVisible}">
+                <StackLayout Orientation="Vertical">
+                    <Frame CornerRadius="20" Padding="0" IsClippedToBounds="True">
+                        <Image Aspect="AspectFit" Source="{Binding Image, Converter={StaticResource ImageSourceConverter}}"/>
+                    </Frame>
+                    <Label Text="{Binding Description}"/>
+                </StackLayout>
+            </Grid>
+            <Grid Grid.Row="2" IsVisible="{Binding StepsAreVisible}">
+                <CollectionView  ItemsSource="{Binding RecipeSteps}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Label HorizontalOptions="Start" LineBreakMode="WordWrap">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding Number}" />
+                                        <Span Text=". " />
+                                        <Span Text="{Binding Description}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+            <ScrollView VerticalOptions="Center" Orientation="Vertical" Grid.Row="2">
+                <Grid>
+                    <CollectionView IsVisible="{Binding IngredientsAreVisible}" ItemsSource="{Binding RecipeIngredients}">
+                        <CollectionView.Header>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="8*"/>
+                                    <ColumnDefinition Width="4*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Style="{StaticResource Header3Label}"  Text="Ингридиент"/>
+                                <Label Grid.Column="1" Style="{StaticResource Header3Label}"  Text="Кол-во"/>
+                                <Label Grid.Column="2" Style="{StaticResource Header3Label}"  Text="Ед. изм."/>
+                            </Grid>
+                        </CollectionView.Header>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="8*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding Title}"/>
+                                    <Entry Grid.Column="1" Text="{Binding Quantity}">
+                                        <Entry.Behaviors>
+                                            <behaviors:EventToCommandBehavior
+                                                EventName="Unfocused"
+                                                Command="{Binding Path=BindingContext.Recalculate, Source={x:Reference RecipePage}}"
+                                                CommandParameter="{Binding}"/>
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                    <Label Grid.Column="2" Text="{Binding Unit, Converter={StaticResource UnitOfMeasureConverter}}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

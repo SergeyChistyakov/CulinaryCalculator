@@ -1,66 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CulinaryCalculator.Pages.EditFilter">
+             x:Class="CulinaryCalculator.Pages.EditFilter"
+             ControlTemplate="{StaticResource ModalPageTemplate}">
     <ContentPage.Content>
-        <Grid Margin="10,0,10,0">
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Label Grid.Row="0" Text="Строка поиска"/>
-                <Entry Grid.Row="1" Text="{Binding Substring}"/>
-                <Label Grid.Row="2" Text="Категории"/>
+            <Label Grid.Row="0" Text="Строка поиска"/>
+            <Entry Grid.Row="1" Text="{Binding Substring}"/>
+            <Label Grid.Row="2" Text="Категории"/>
 
-                <CollectionView SelectionMode="Multiple" Grid.Row="3" ItemsSource="{Binding Categories, Mode=OneWay}" SelectedItems="{Binding SelectedCategories, Mode=TwoWay}">
-                    <CollectionView.Resources>
-                        <Style TargetType="Grid">
-                            <Setter Property="VisualStateManager.VisualStateGroups">
-                                <VisualStateGroupList>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal" />
-                                        <VisualState x:Name="Selected">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor"
+            <CollectionView SelectionMode="Multiple" Grid.Row="3" ItemsSource="{Binding Categories, Mode=OneWay}" SelectedItems="{Binding SelectedCategories, Mode=TwoWay}">
+                <CollectionView.Resources>
+                    <Style TargetType="Grid">
+                        <Setter Property="VisualStateManager.VisualStateGroups">
+                            <VisualStateGroupList>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor"
                                         Value="LightSkyBlue" />
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateGroupList>
-                            </Setter>
-                        </Style>
-                    </CollectionView.Resources>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateGroupList>
+                        </Setter>
+                    </Style>
+                </CollectionView.Resources>
 
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Label HorizontalOptions="StartAndExpand" Text="{Binding Title}"/>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label HorizontalOptions="StartAndExpand" Text="{Binding Title}"/>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-                <Label Grid.Row="4" Text="Ингридиенты"/>
-                <ListView SelectionMode="Single" SelectedItem="{Binding  SelectedIngridient}" Grid.Row="5" ItemsSource="{Binding Ingridients}"/>
-                <StackLayout Grid.Row="6" Orientation="Horizontal">
-                    <Entry HorizontalOptions="FillAndExpand" Text="{Binding IngridientToAdd}"/>
-                    <Button Text="Добавить" Command="{Binding AddIngridient}"/>
-                    <Button Text="Удалить" Command="{Binding DeleteIngridient}"/>
-                </StackLayout>
-            </Grid>
-            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="End">
-                <Button Command="{Binding Save}" Text="Сохранить"/>
-                <Button Command="{Binding Cancel}" Text="Отмена"/>
+            <Label Grid.Row="4" Text="Ингридиенты"/>
+            <ListView SelectionMode="Single" SelectedItem="{Binding  SelectedIngredient}" Grid.Row="5" ItemsSource="{Binding Ingredients}"/>
+            <StackLayout Grid.Row="6" Orientation="Horizontal">
+                <Entry HorizontalOptions="FillAndExpand" Text="{Binding IngredientToAdd}"/>
+                <Button Text="Добавить" Command="{Binding AddIngredient}"/>
+                <Button Text="Удалить" Command="{Binding DeleteIngredient}"/>
             </StackLayout>
         </Grid>
-
     </ContentPage.Content>
 </ContentPage>

@@ -19,6 +19,11 @@ namespace CulinaryCalculator.Model
             var folder = DependencyService.Get<IPath>().GetDatabaseFolder();
             RecipesDBPath = Path.Combine(folder, fileName);
 
+            if (!File.Exists(RecipesDBPath))
+            {
+                File.Create(RecipesDBPath);
+            }
+
             using (var db = new RecipesContext(RecipesDBPath))
             {
                 db.Database.EnsureCreated();
@@ -76,6 +81,14 @@ namespace CulinaryCalculator.Model
             using (var db = new RecipesContext(RecipesDBPath))
             {
                 return db.Recipes.Include(r => r.Category).ToList();
+            }
+        }
+
+        public static Recipe GetRecipe(int recipeId)
+        {
+            using (var db = new RecipesContext(RecipesDBPath))
+            {
+                return db.Recipes.Include(r => r.Steps).Include(r => r.IngredientItems).First(r => r.Id == recipeId);
             }
         }
 

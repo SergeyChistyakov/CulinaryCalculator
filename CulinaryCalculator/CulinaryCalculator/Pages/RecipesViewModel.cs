@@ -1,5 +1,5 @@
 ﻿using CulinaryCalculator.Infrastructure;
-using CulinaryCalculator.Model;
+using Model = CulinaryCalculator.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,13 +10,16 @@ namespace CulinaryCalculator.Pages
 {
     public class RecipesViewModel : BaseViewModel
     {
-        ICommand SelectRecipe { get; }
+        public ICommand SelectRecipe { get; }
+
+        private RecipeViewModel SelectedRecipe { get; }
 
         public RecipesViewModel(MainPageTemplateViewModel templateViewModel, INavigation navigation)
         {
             TemplateViewModel = templateViewModel;
             Navigation = navigation;
-            Recipes = new ObservableCollection<Recipe>();
+            Recipes = new ObservableCollection<Model.Recipe>();
+            SelectedRecipe = new RecipeViewModel();
             SelectRecipe = new PropertyDependentCommand(this, (_) => true, DoSelectRecipe);
         }
 
@@ -24,25 +27,29 @@ namespace CulinaryCalculator.Pages
 
         public INavigation Navigation { get; }
 
-        public ObservableCollection<Recipe> Recipes { get; }
+        public ObservableCollection<Model.Recipe> Recipes { get; }
 
-        public void Update(IEnumerable<Category> categories, IEnumerable<string> ingridients, string substring)
+        public void Update(IEnumerable<Model.Category> categories, IEnumerable<string> ingredients, string substring)
         {
             Recipes.Clear();
-            var recipes = RecipesRepository.GetRecipes()
-                .Where(r => 
+            var recipes = Model.RecipesRepository.GetRecipes()
+                .Where(r =>
                 (string.IsNullOrEmpty(substring) || r.Title.Contains(substring))
-                && (categories == null || !categories.Any() || categories.Contains(r.Category, new CategoryIdEqualityComparer()))
-                && (ingridients == null || !ingridients.Any() || ingridients.All(item => r.IngredientItems.Select(iI=>iI.Title).Contains(item))));
+                && (categories == null || !categories.Any() || categories.Contains(r.Category, new Model.CategoryIdEqualityComparer()))
+                && (ingredients == null || !ingredients.Any() || ingredients.All(item => r.IngredientItems.Select(iI => iI.Title).Contains(item))));
             foreach (var recipe in recipes)
             {
                 Recipes.Add(recipe);
             }
         }
 
-        private void DoSelectRecipe(object param)
+        private async void DoSelectRecipe(object param)
         {
             int recipeId = (int)param;
+            SelectedRecipe.Load(recipeId);
+            var view = new Recipe();
+            view.BindingContext = SelectedRecipe;
+            await Navigation.PushAsync(view);
         }
     }
 }

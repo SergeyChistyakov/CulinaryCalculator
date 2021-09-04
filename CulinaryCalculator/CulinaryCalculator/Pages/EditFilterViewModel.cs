@@ -9,51 +9,136 @@ using Xamarin.Forms;
 
 namespace CulinaryCalculator.Pages
 {
-    public class EditFilterViewModel : ModalPageBaseViewModel
+    public class EditFilterViewModel : ModalPageBaseViewModel, IConvertible
     {
-        private string m_IngridientToAdd;
-        private string m_SelectedIngridient;
+        private string m_IngredientToAdd;
+        private string m_SelectedIngredient;
         public event Action<IEnumerable<Category>, IEnumerable<string>, string> FilterChanged;
-        public ICommand AddIngridient { get; }
-        public ICommand DeleteIngridient { get; }
+        public ICommand AddIngredient { get; }
+        public ICommand DeleteIngredient { get; }
 
         public EditFilterViewModel(INavigation navigation) : base(navigation)
         {
-            AddIngridient = new PropertyDependentCommand(this, _ => !string.IsNullOrEmpty(IngridientToAdd), _ => { DoAddIngridient(); });
-            DeleteIngridient = new PropertyDependentCommand(this, _ => !string.IsNullOrEmpty(SelectedIngridient), _ => { DoDeleteIngridient(); });
+            AddIngredient = new PropertyDependentCommand(this, _ => !string.IsNullOrEmpty(IngredientToAdd), _ => { DoAddIngredient(); });
+            DeleteIngredient = new PropertyDependentCommand(this, _ => !string.IsNullOrEmpty(SelectedIngredient), _ => { DoDeleteIngredient(); });
             Categories = new ObservableCollection<object>(RecipesRepository.GetCategories());
         }
 
         public ObservableCollection<object> Categories { get; }
         public ObservableCollection<object> SelectedCategories { get; set; } = new ObservableCollection<object>();
 
-        public string IngridientToAdd
+        public string IngredientToAdd
         {
-            get => m_IngridientToAdd;
-            set => Set(ref m_IngridientToAdd, value);
+            get => m_IngredientToAdd;
+            set => Set(ref m_IngredientToAdd, value);
         }
 
-        public string SelectedIngridient
+        public string SelectedIngredient
         {
-            get => m_SelectedIngridient;
-            set => Set(ref m_SelectedIngridient, value);
+            get => m_SelectedIngredient;
+            set => Set(ref m_SelectedIngredient, value);
         }
-        public ObservableCollection<string> Ingridients { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<string> Ingredients { get; set; } = new ObservableCollection<string>();
         public string Substring { get; set; }
         protected override void DoSave()
         {
-            FilterChanged?.Invoke(SelectedCategories.Cast<Category>(), Ingridients, Substring);
+            FilterChanged?.Invoke(SelectedCategories.Cast<Category>(), Ingredients, Substring);
             base.DoSave();
         }
-        private void DoAddIngridient()
+        private void DoAddIngredient()
         {
-            Ingridients.Add(IngridientToAdd);
-            IngridientToAdd = string.Empty;
+            Ingredients.Add(IngredientToAdd);
+            IngredientToAdd = string.Empty;
         }
 
-        private void DoDeleteIngridient()
+        private void DoDeleteIngredient()
         {
-            Ingridients.Remove(SelectedIngridient);
+            Ingredients.Remove(SelectedIngredient);
+        }
+
+        public TypeCode GetTypeCode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ToBoolean(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte ToByte(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public char ToChar(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DateTime ToDateTime(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public decimal ToDecimal(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public double ToDouble(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public short ToInt16(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int ToInt32(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public long ToInt64(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public sbyte ToSByte(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public float ToSingle(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ToString(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object ToType(Type conversionType, IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ushort ToUInt16(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public uint ToUInt32(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ulong ToUInt64(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
         }
     }
 }

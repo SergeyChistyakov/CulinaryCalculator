@@ -24,9 +24,9 @@ namespace CulinaryCalculator
             TemplateViewModel.FilterViewModel.FilterChanged += FilterViewModel_FilterChanged; ;
         }
 
-        private void FilterViewModel_FilterChanged(IEnumerable<Category> categories, IEnumerable<string> ingridients, string substring)
+        private void FilterViewModel_FilterChanged(IEnumerable<Category> categories, IEnumerable<string> ingredients, string substring)
         {
-            m_RecipesViewModel.Update(categories, ingridients, substring);
+            m_RecipesViewModel.Update(categories, ingredients, substring);
             if (!Navigation.NavigationStack.Contains(m_RecipesPage)) Navigation.PushAsync(m_RecipesPage);
         }
 
