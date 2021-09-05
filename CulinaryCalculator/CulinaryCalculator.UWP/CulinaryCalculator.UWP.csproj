@@ -98,6 +98,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveWindows.cs" />
     <Compile Include="UWPPath.cs" />
+    <Compile Include="UWPPhotoPicker.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

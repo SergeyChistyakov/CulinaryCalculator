@@ -17,11 +17,26 @@ namespace CulinaryCalculator
         {
             Navigation = navigation;
             Categories.CategorySelected += Categories_CategorySelected;
+            Categories.CategoryEdited += Categories_CategoryEdited;
             TemplateViewModel = new MainPageTemplateViewModel(navigation);
             m_RecipesViewModel = new RecipesViewModel(TemplateViewModel, navigation);
             m_RecipesPage = new Recipes();
             m_RecipesPage.BindingContext = m_RecipesViewModel;
             TemplateViewModel.FilterViewModel.FilterChanged += FilterViewModel_FilterChanged; ;
+        }
+
+        private async void Categories_CategoryEdited(object sender, Category category)
+        {
+            var view = new EditCategory();
+            var viewModel = new EditCategoryViewModel(view.Navigation, category);
+            viewModel.CategorySaved += ViewModel_CategorySaved;
+            view.BindingContext = viewModel;
+            await Navigation.PushModalAsync(view);
+        }
+
+        private void ViewModel_CategorySaved(object sender, Category category)
+        {
+            Categories.Refresh();
         }
 
         private void FilterViewModel_FilterChanged(IEnumerable<Category> categories, IEnumerable<string> ingredients, string substring)

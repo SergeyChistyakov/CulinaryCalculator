@@ -1,19 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:infrastructure="clr-namespace:CulinaryCalculator.Infrastructure"
              x:Class="CulinaryCalculator.Pages.EditCategory"
              ControlTemplate="{StaticResource ModalPageTemplate}">
+    <ContentPage.Resources>
+        <infrastructure:ByteArrayToImageSourceConverter x:Key="ImageSourceConverter"/>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Text="Название категории"/>
+            <Label Grid.Row="0" Text="Название категории:"/>
             <Entry Grid.Row="1" Text="{Binding Title}"/>
-            <Button Grid.Row="2" Text="Выберите картинку"/>
+            <Button Grid.Row="2" Text="Выберите картинку" Command="{Binding GetImage}"/>
+            <Image Grid.Row="3" Aspect="AspectFit" Source="{Binding Image, Converter={StaticResource ImageSourceConverter}}"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
