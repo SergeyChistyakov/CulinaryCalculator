@@ -167,8 +167,7 @@ namespace CulinaryCalculator.Pages
 
         protected override void DoSave()
         {
-            m_Recipe.CategoryId = SelectedCategory.Id;
-            m_Recipe.Category = SelectedCategory;
+            m_Recipe.CategoryId = SelectedCategory.Id;          
             m_Recipe.Description = RecipeDescription;
             m_Recipe.Image = RecipeImage;
             m_Recipe.Title = RecipeTitle;
@@ -187,6 +186,7 @@ namespace CulinaryCalculator.Pages
 
             if (m_Recipe.Id > 0)
             {
+                m_Recipe.Category = SelectedCategory;
                 RecipesRepository.UpdateRecipe(m_Recipe);
             }
             else
