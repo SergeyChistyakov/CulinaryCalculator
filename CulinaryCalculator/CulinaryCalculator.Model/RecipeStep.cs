@@ -8,5 +8,10 @@
         public int RecipeId { get; set; }
 
         public Recipe Recipe { get; set; }
+
+        public override string ToString()
+        {
+            return Description;
+        }
     }
 }

@@ -1,10 +1,110 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:infrastructure="clr-namespace:CulinaryCalculator.Infrastructure"
              x:Class="CulinaryCalculator.Pages.EditRecipe"
+             Title="Редактирование рецепта"
              ControlTemplate="{StaticResource ModalPageTemplate}">
+    <ContentPage.Resources>
+        <infrastructure:ByteArrayToImageSourceConverter x:Key="ImageSourceConverter"/>
+        <infrastructure:UnitOfMeasureConverter x:Key="UnitOfMeasureConverter"/>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
+            <Grid IsVisible="{Binding Step1IsVisible}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Style="{StaticResource Header1Label}" Grid.Row="0" Text="О рецепте"/>
+                <Label Grid.Row="1" Text="Категория:"/>
+                <Picker Grid.Row="2" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}"/>
+                <Label Grid.Row="3" Text="Название рецепта:"/>
+                <Entry Grid.Row="4" Text="{Binding RecipeTitle}"/>
+                <Label Grid.Row="5" Text="Описание рецепта:"/>
+                <Editor AutoSize="TextChanges" Grid.Row="6" Text="{Binding RecipeDescription}"/>
+                <Button Grid.Row="7" Text="Выберите картинку" Command="{Binding GetImage}"/>
+                <Image Grid.Row="8" Aspect="AspectFit" Source="{Binding RecipeImage, Converter={StaticResource ImageSourceConverter}}"/>
+                <Button Grid.Row="9" Text="Далее" Command="{Binding Next}"/>
+            </Grid>
+            <Grid IsVisible="{Binding Step2IsVisible}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Style="{StaticResource Header1Label}" Grid.Row="0" Text="Шаги приготовления"/>
+                <Entry Grid.Row="1" HorizontalOptions="FillAndExpand" Text="{Binding StepToAdd}"/>
+                <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="End">
+                    <Button Text="Добавить" Command="{Binding AddStep}"/>
+                    <Button Text="Удалить" Command="{Binding DeleteStep}"/>
+                </StackLayout>
+                <ListView HeightRequest="200" Grid.Row="3" SelectionMode="Single" SelectedItem="{Binding SelectedStep}" ItemsSource="{Binding RecipeSteps}"/>
+                <Button Grid.Row="4" Text="Далее" Command="{Binding Next}"/>
+            </Grid>
+            <Grid IsVisible="{Binding Step3IsVisible}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Style="{StaticResource Header1Label}" Grid.Row="0" Text="Ингридиенты"/>
+                <Label Grid.Row="1" Text="Ингридиент"/>
+                <Entry Grid.Row="2" HorizontalOptions="FillAndExpand" Text="{Binding IngredientToAdd}"/>
+                <Label Grid.Row="3" Text="Мера"/>
+                <Picker Grid.Row="4" ItemsSource="{Binding Measures}" SelectedItem="{Binding SelectedMeasure}" ItemDisplayBinding="{Binding Converter={StaticResource UnitOfMeasureConverter}}"/>
+                <Label Grid.Row="5" Text="Количество"/>
+                <Entry Grid.Row="6" Text="{Binding Quantity}"/>
+                <StackLayout Grid.Row="7" Orientation="Horizontal">
+                    <Button Text="Добавить" Command="{Binding AddIngredient}"/>
+                    <Button Text="Удалить" Command="{Binding DeleteIngredient}"/>
+                </StackLayout>
+                <ListView Grid.Row="8" SelectionMode="Single" SelectedItem="{Binding  SelectedIngredient}" ItemsSource="{Binding Ingredients}">
+                    <ListView.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8*"/>
+                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Style="{StaticResource Header3Label}"  Text="Ингридиент"/>
+                            <Label Grid.Column="1" Style="{StaticResource Header3Label}"  Text="Кол-во"/>
+                            <Label Grid.Column="2" Style="{StaticResource Header3Label}"  Text="Ед. изм."/>
+                        </Grid>
+                    </ListView.Header>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="8*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding Title}"/>
+                                    <Label Grid.Column="1" Text="{Binding Quantity}"/>
+                                    <Label Grid.Column="2" Text="{Binding Unit, Converter={StaticResource UnitOfMeasureConverter}}"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

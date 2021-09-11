@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Resources;
 
 namespace CulinaryCalculator.Model
 {
@@ -10,6 +7,11 @@ namespace CulinaryCalculator.Model
         private readonly string m_DatabasePath;
         public DbSet<Category> Categories { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
+
+        public DbSet<IngredientItem> IngredientItem { get; set; }
+
+        public DbSet<RecipeStep> RecipeStep { get; set; }
+
         public RecipesContext(string databasePath)
         {
             m_DatabasePath = databasePath;
@@ -21,6 +23,18 @@ namespace CulinaryCalculator.Model
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder
+                .Entity<RecipeStep>()
+                .HasOne(rs => rs.Recipe)
+                .WithMany(r => r.Steps)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            modelBuilder
+                .Entity<IngredientItem>()
+                .HasOne(rs => rs.Recipe)
+                .WithMany(r => r.IngredientItems)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
             var categoryBuilder = modelBuilder.Entity<Category>();
             categoryBuilder.HasData(new Category() { Id = 1, Title = "Пироги", Image = ReadBinaryFromResource("meatpie.jpg") });
             categoryBuilder.HasData(new Category() { Id = 2, Title = "Пирожные", Image = ReadBinaryFromResource("cookies.jpg") });

@@ -5,12 +5,17 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
+using CulinaryCalculator.Model;
 
 namespace CulinaryCalculator.Pages
 {
     public class RecipesViewModel : BaseViewModel
     {
         public ICommand SelectRecipe { get; }
+
+        public ICommand EditRecipe { get; }
+
+        public ICommand DeleteRecipe { get; }
 
         private RecipeViewModel SelectedRecipe { get; }
 
@@ -21,6 +26,8 @@ namespace CulinaryCalculator.Pages
             Recipes = new ObservableCollection<Model.Recipe>();
             SelectedRecipe = new RecipeViewModel();
             SelectRecipe = new PropertyDependentCommand(this, (_) => true, DoSelectRecipe);
+            EditRecipe = new PropertyDependentCommand(this, _ => true, (object id) => DoEditRecipe((int)id));
+            DeleteRecipe = new PropertyDependentCommand(this, _ => true, (object id) => DoDeleteRecipe((int)id));
         }
 
         public MainPageTemplateViewModel TemplateViewModel { get; }
@@ -50,6 +57,28 @@ namespace CulinaryCalculator.Pages
             var view = new Recipe();
             view.BindingContext = SelectedRecipe;
             await Navigation.PushAsync(view);
+        }
+
+        private async void DoDeleteRecipe(int id)
+        {
+            var answer = await App.Current.MainPage.DisplayAlert("Кулинарный калькулятор", "Удалить рецепт?", "ОК", "Отмена");
+            if (!answer)
+            {
+                return;
+            }
+
+            var recipe = Recipes.FirstOrDefault(r => r.Id == id);
+            if (recipe == null) return;
+            RecipesRepository.RemoveRecipe(recipe);
+            Recipes.Remove(recipe);
+        }
+
+        private async void DoEditRecipe(int id)
+        {
+            var view = new EditRecipe();
+            var viewModel = new EditRecipeViewModel(view.Navigation, id);
+            view.BindingContext = viewModel;
+            await Navigation.PushModalAsync(view);
         }
     }
 }

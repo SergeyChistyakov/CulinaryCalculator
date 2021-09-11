@@ -11,6 +11,11 @@ namespace CulinaryCalculator.Model
         public byte[] Image { get; set; }
 
         public List<Recipe> Recipes { get; set; } = new List<Recipe>();
+
+        public override string ToString()
+        {
+            return Title;
+        }
     }
 
     public class CategoryIdEqualityComparer : IEqualityComparer<Category>
