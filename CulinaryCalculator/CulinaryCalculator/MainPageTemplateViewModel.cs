@@ -1,5 +1,6 @@
 ﻿using CulinaryCalculator.Infrastructure;
 using CulinaryCalculator.Pages;
+using System;
 using Xamarin.Forms;
 
 namespace CulinaryCalculator
@@ -17,6 +18,8 @@ namespace CulinaryCalculator
         public PropertyDependentCommand EditFilter { get; }
 
         public INavigation Navigation { get; }
+
+        public Action OnCreateRecipe { get; set; }
 
         public MainPageTemplateViewModel(INavigation navigation)
         {
@@ -39,7 +42,7 @@ namespace CulinaryCalculator
         private async void ShowCreateRecipe(object sender)
         {
             var view = new EditRecipe();
-            var viewModel = new EditRecipeViewModel(view.Navigation);
+            var viewModel = new EditRecipeViewModel(view.Navigation, OnCreateRecipe);
             view.BindingContext = viewModel;
             await Navigation.PushModalAsync(view);
         }

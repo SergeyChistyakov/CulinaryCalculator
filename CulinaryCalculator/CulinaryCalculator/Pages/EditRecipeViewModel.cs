@@ -12,6 +12,7 @@ namespace CulinaryCalculator.Pages
 {
     public class EditRecipeViewModel : ModalPageBaseViewModel
     {
+        private Action m_onSave;
         private readonly Model.Recipe m_Recipe;
 
         #region Step1
@@ -137,8 +138,9 @@ namespace CulinaryCalculator.Pages
         }
         #endregion
 
-        public EditRecipeViewModel(INavigation navigation, int? recipeId = null) : base(navigation)
+        public EditRecipeViewModel(INavigation navigation, Action onSave, int? recipeId = null) : base(navigation)
         {
+            m_onSave = onSave;
             Next = new PropertyDependentCommand(this, _ => true, _ => DoNext());
             Categories = new ObservableCollection<Category>(RecipesRepository.GetCategories());
             GetImage = new PropertyDependentCommand(this, _ => true, _ => DoGetImage());
@@ -195,6 +197,7 @@ namespace CulinaryCalculator.Pages
             }
 
             base.DoSave();
+            m_onSave();
         }
 
         private async void DoGetImage()

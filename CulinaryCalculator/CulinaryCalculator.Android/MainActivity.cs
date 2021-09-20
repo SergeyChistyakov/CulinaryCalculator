@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using System.Threading.Tasks;
 using System.IO;
+using Android.Content;
 
 namespace CulinaryCalculator.Droid
 {

@@ -80,7 +80,7 @@ namespace CulinaryCalculator.Model
         {
             using (var db = new RecipesContext(RecipesDBPath))
             {
-                return db.Recipes.Include(r => r.Category).ToList();
+                return db.Recipes.Include(r => r.Category).Include(r => r.IngredientItems).ToList();
             }
         }
 
@@ -96,7 +96,7 @@ namespace CulinaryCalculator.Model
         {
             using (var db = new RecipesContext(RecipesDBPath))
             {
-                var iiIds = recipe.IngredientItems.Select(ii => ii.Id);               
+                var iiIds = recipe.IngredientItems.Select(ii => ii.Id);
                 var ingredientsToDelete = db.IngredientItem.Where(item => !iiIds.Contains(item.Id));
                 db.IngredientItem.RemoveRange(ingredientsToDelete);
 
@@ -105,7 +105,7 @@ namespace CulinaryCalculator.Model
                 db.RecipeStep.RemoveRange(stepsToDelete);
 
                 db.Recipes.Update(recipe);
-                
+
                 db.SaveChanges();
             }
         }
