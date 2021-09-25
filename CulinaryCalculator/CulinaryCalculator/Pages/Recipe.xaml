@@ -27,8 +27,8 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Button Text="Описание" Command="{Binding ShowDescription}" HorizontalOptions="Start"/>
-                <Button Grid.Column="1" Text="Шаги" Command="{Binding ShowSteps}" HorizontalOptions="Center"/>
-                <Button Grid.Column="2" Text="Ингридиенты" Command="{Binding ShowIngredients}" HorizontalOptions="End"/>
+                <Button Grid.Column="1" Text="Ингридиенты" Command="{Binding ShowIngredients}" HorizontalOptions="Center"/>
+                <Button Grid.Column="2" Text="Шаги" Command="{Binding ShowSteps}" HorizontalOptions="End"/>
             </Grid>
 
             <Grid Grid.Row="2" IsVisible="{Binding DescriptionIsVisible}">

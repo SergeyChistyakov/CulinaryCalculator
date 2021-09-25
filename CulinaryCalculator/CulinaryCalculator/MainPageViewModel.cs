@@ -19,6 +19,7 @@ namespace CulinaryCalculator
             Categories.CategorySelected += Categories_CategorySelected;
             Categories.CategoryEdited += Categories_CategoryEdited;
             TemplateViewModel = new MainPageTemplateViewModel(navigation);
+            TemplateViewModel.OnCreateCategory = Categories.Refresh;
             m_RecipesViewModel = new RecipesViewModel(TemplateViewModel, navigation);
             m_RecipesPage = new Recipes();
             m_RecipesPage.BindingContext = m_RecipesViewModel;

@@ -39,29 +39,13 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Label Style="{StaticResource Header1Label}" Grid.Row="0" Text="Шаги приготовления"/>
-                <Entry Grid.Row="1" HorizontalOptions="FillAndExpand" Text="{Binding StepToAdd}"/>
-                <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="End">
-                    <Button Text="Добавить" Command="{Binding AddStep}"/>
-                    <Button Text="Удалить" Command="{Binding DeleteStep}"/>
-                </StackLayout>
-                <ListView HeightRequest="200" Grid.Row="3" SelectionMode="Single" SelectedItem="{Binding SelectedStep}" ItemsSource="{Binding RecipeSteps}"/>
-                <Button Grid.Row="4" Text="Далее" Command="{Binding Next}"/>
-            </Grid>
-            <Grid IsVisible="{Binding Step3IsVisible}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Label Style="{StaticResource Header1Label}" Grid.Row="0" Text="Ингридиенты"/>
                 <Label Grid.Row="1" Text="Ингридиент"/>
@@ -104,6 +88,22 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <Button Grid.Row="9" Text="Далее" Command="{Binding Next}"/>
+            </Grid>
+            <Grid IsVisible="{Binding Step3IsVisible}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Style="{StaticResource Header1Label}" Grid.Row="0" Text="Шаги приготовления"/>
+                <Entry Grid.Row="1" HorizontalOptions="FillAndExpand" Text="{Binding StepToAdd}"/>
+                <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="End">
+                    <Button Text="Добавить" Command="{Binding AddStep}"/>
+                    <Button Text="Удалить" Command="{Binding DeleteStep}"/>
+                </StackLayout>
+                <ListView HeightRequest="200" Grid.Row="3" SelectionMode="Single" SelectedItem="{Binding SelectedStep}" ItemsSource="{Binding RecipeSteps}"/>
             </Grid>
         </Grid>
     </ContentPage.Content>

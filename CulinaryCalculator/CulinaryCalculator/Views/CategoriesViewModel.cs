@@ -38,6 +38,8 @@ namespace CulinaryCalculator.Views
         {
             Categories.Clear();
             RecipesRepository.GetCategories().ForEach(item => Categories.Add(item));
+            Label = GetLabel();
+            NotifyOfPropertyChange(nameof(Label));
         }
 
         private void RecipesRepository_CategoryAdded(object sender, Category category)
@@ -57,6 +59,7 @@ namespace CulinaryCalculator.Views
             if (category == null) return;
             RecipesRepository.RemoveCategory(category);
             Categories.Remove(category);
+            Refresh();
         }
 
         private void Categories_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

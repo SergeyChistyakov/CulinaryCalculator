@@ -34,7 +34,7 @@
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" Text="+ Категорию" HorizontalOptions="Start" WidthRequest="100" Command="{TemplateBinding BindingContext.TemplateViewModel.CreateCategory}"/>
                     <Button Grid.Column="1" Text="+ Рецепт" HorizontalOptions="Start" WidthRequest="100" Command="{TemplateBinding BindingContext.TemplateViewModel.CreateRecipe}"/>
-                    <Button Grid.Column="2" Text="Настройки" HorizontalOptions="Start" WidthRequest="100" Command="{TemplateBinding BindingContext.TemplateViewModel.EditSettings}"/>
+                    <Button Grid.Column="2" Text="Настройка" HorizontalOptions="Start" WidthRequest="100" Command="{TemplateBinding BindingContext.TemplateViewModel.EditSettings}"/>
                     <Button Grid.Column="3" Text="Фильтр" WidthRequest="100" Command="{TemplateBinding BindingContext.TemplateViewModel.EditFilter}"/>
                 </Grid>
             </Grid>
@@ -51,6 +51,19 @@
                     <Button Command="{TemplateBinding BindingContext.Cancel}" Text="Отмена"/>
 				</StackLayout>
 			</Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="FilterTemplate">
+            <Grid Margin="10,0,10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ContentPresenter Grid.Row="0"/>
+                <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="End">
+                    <Button Command="{TemplateBinding BindingContext.Save}" Text="Найти"/>
+                    <Button Command="{TemplateBinding BindingContext.Cancel}" Text="Отмена"/>
+                </StackLayout>
+            </Grid>
         </ControlTemplate>
     </Application.Resources>
 </Application>

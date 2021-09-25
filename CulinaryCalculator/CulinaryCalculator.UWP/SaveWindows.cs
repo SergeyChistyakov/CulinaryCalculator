@@ -19,9 +19,10 @@ namespace CulinaryCalculator.UWP
             FileSavePicker savePicker = new FileSavePicker();
             savePicker.SuggestedStartLocation = PickerLocationId.Desktop;
             savePicker.SuggestedFileName = fileName;
-            savePicker.FileTypeChoices.Add("Adobe PDF Document", new List<string>() { ".pdf" });          
-            
+            savePicker.FileTypeChoices.Add("Adobe PDF Document", new List<string>() { ".pdf" });
+
             storageFile = await savePicker.PickSaveFileAsync();
+            if (storageFile == null) return;
             using (Stream outStream = await storageFile.OpenStreamForWriteAsync())
             {
                 outStream.Write(stream.ToArray(), 0, (int)stream.Length);

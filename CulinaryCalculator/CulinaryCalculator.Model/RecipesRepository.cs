@@ -97,11 +97,11 @@ namespace CulinaryCalculator.Model
             using (var db = new RecipesContext(RecipesDBPath))
             {
                 var iiIds = recipe.IngredientItems.Select(ii => ii.Id);
-                var ingredientsToDelete = db.IngredientItem.Where(item => !iiIds.Contains(item.Id));
+                var ingredientsToDelete = db.IngredientItem.Where(item => !iiIds.Contains(item.Id) && item.RecipeId == recipe.Id);
                 db.IngredientItem.RemoveRange(ingredientsToDelete);
 
                 var stepsIds = recipe.Steps.Select(ii => ii.Id);
-                var stepsToDelete = db.RecipeStep.Where(item => !stepsIds.Contains(item.Id));
+                var stepsToDelete = db.RecipeStep.Where(item => !stepsIds.Contains(item.Id) && item.RecipeId == recipe.Id);
                 db.RecipeStep.RemoveRange(stepsToDelete);
 
                 db.Recipes.Update(recipe);

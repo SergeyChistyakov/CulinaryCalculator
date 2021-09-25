@@ -52,28 +52,6 @@ namespace CulinaryCalculator.Pages
         #endregion
 
         #region Step2
-        public ObservableCollection<RecipeStep> RecipeSteps { get; } = new ObservableCollection<RecipeStep>();
-
-        private RecipeStep m_SelectedStep;
-        public RecipeStep SelectedStep
-        {
-            get { return m_SelectedStep; }
-            set { Set(ref m_SelectedStep, value); }
-        }
-
-        private string m_StepToAdd;
-        public string StepToAdd
-        {
-            get { return m_StepToAdd; }
-            set { Set(ref m_StepToAdd, value); }
-        }
-
-        public ICommand AddStep { get; }
-        public ICommand DeleteStep { get; }
-
-        #endregion
-
-        #region Step3
 
         private string m_IngredientToAdd;
         public string IngredientToAdd
@@ -112,6 +90,28 @@ namespace CulinaryCalculator.Pages
         public ICommand AddIngredient { get; }
 
         public ICommand DeleteIngredient { get; }
+
+        #endregion
+
+        #region Step3
+        public ObservableCollection<RecipeStep> RecipeSteps { get; } = new ObservableCollection<RecipeStep>();
+
+        private RecipeStep m_SelectedStep;
+        public RecipeStep SelectedStep
+        {
+            get { return m_SelectedStep; }
+            set { Set(ref m_SelectedStep, value); }
+        }
+
+        private string m_StepToAdd;
+        public string StepToAdd
+        {
+            get { return m_StepToAdd; }
+            set { Set(ref m_StepToAdd, value); }
+        }
+
+        public ICommand AddStep { get; }
+        public ICommand DeleteStep { get; }
 
         #endregion
 
@@ -169,7 +169,7 @@ namespace CulinaryCalculator.Pages
 
         protected override void DoSave()
         {
-            m_Recipe.CategoryId = SelectedCategory.Id;          
+            m_Recipe.CategoryId = SelectedCategory.Id;
             m_Recipe.Description = RecipeDescription;
             m_Recipe.Image = RecipeImage;
             m_Recipe.Title = RecipeTitle;
@@ -179,7 +179,7 @@ namespace CulinaryCalculator.Pages
             {
                 m_Recipe.Steps.Add(step);
             }
-            
+
             m_Recipe.IngredientItems = new List<IngredientItem>();
             foreach (var item in Ingredients)
             {

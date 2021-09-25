@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace CulinaryCalculator
 {
-    public class MainPageTemplateViewModel: BaseViewModel
+    public class MainPageTemplateViewModel : BaseViewModel
     {
         public EditFilterViewModel FilterViewModel { get; }
 
@@ -21,6 +21,8 @@ namespace CulinaryCalculator
 
         public Action OnCreateRecipe { get; set; }
 
+        public Action OnCreateCategory { get; set; }
+
         public MainPageTemplateViewModel(INavigation navigation)
         {
             Navigation = navigation;
@@ -33,9 +35,9 @@ namespace CulinaryCalculator
 
         private async void ShowCreateCategory(object sender)
         {
-
             var view = new EditCategory();
             var viewModel = new EditCategoryViewModel(view.Navigation);
+            viewModel.CategorySaved += (_, __) => OnCreateCategory();
             view.BindingContext = viewModel;
             await Navigation.PushModalAsync(view);
         }
@@ -57,7 +59,7 @@ namespace CulinaryCalculator
         {
             var view = new EditFilter();
             view.BindingContext = FilterViewModel;
-            await Navigation.PushModalAsync(view);
+            await Navigation.PushModalAsync(view);    
         }
     }
 }

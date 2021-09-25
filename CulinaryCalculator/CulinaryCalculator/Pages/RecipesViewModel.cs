@@ -80,10 +80,11 @@ namespace CulinaryCalculator.Pages
                 return;
             }
 
-            var recipe = Recipes.FirstOrDefault(r => r.Id == id);
+            var recipe = RecipesRepository.GetRecipe(id);
             if (recipe == null) return;
             RecipesRepository.RemoveRecipe(recipe);
             Recipes.Remove(recipe);
+            await Navigation.PopAsync();
         }
 
         private async void DoEditRecipe(int id)
