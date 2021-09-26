@@ -1,4 +1,5 @@
 ﻿using CulinaryCalculator.Infrastructure;
+using CulinaryCalculator.Model;
 using CulinaryCalculator.Pages;
 using System;
 using Xamarin.Forms;
@@ -21,7 +22,7 @@ namespace CulinaryCalculator
 
         public Action OnCreateRecipe { get; set; }
 
-        public Action OnCreateCategory { get; set; }
+        public Action<Category> OnCreateCategory { get; set; }
 
         public MainPageTemplateViewModel(INavigation navigation)
         {
@@ -37,7 +38,7 @@ namespace CulinaryCalculator
         {
             var view = new EditCategory();
             var viewModel = new EditCategoryViewModel(view.Navigation);
-            viewModel.CategorySaved += (_, __) => OnCreateCategory();
+            viewModel.CategorySaved += (_, category) => OnCreateCategory(category);
             view.BindingContext = viewModel;
             await Navigation.PushModalAsync(view);
         }

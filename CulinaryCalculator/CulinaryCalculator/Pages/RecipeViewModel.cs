@@ -112,11 +112,14 @@ namespace CulinaryCalculator.Pages
             page.Graphics.DrawString(Label, fontForLabel, PdfBrushes.Black, new PointF(0, yPosition));
             yPosition += 30;
 
-            using (var ms = new MemoryStream(Image))
+            if(Image != null)
             {
-                PdfBitmap bitmap = new PdfBitmap(ms);
-                page.Graphics.DrawImage(bitmap, 0, yPosition);
-                yPosition += bitmap.Height / 1.2f;
+                using (var ms = new MemoryStream(Image))
+                {
+                    PdfBitmap bitmap = new PdfBitmap(ms);
+                    page.Graphics.DrawImage(bitmap, 0, yPosition);
+                    yPosition += bitmap.Height / 1.2f;
+                }
             }
 
             PdfTextElement element = new PdfTextElement(Description);

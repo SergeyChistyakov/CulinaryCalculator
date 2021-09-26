@@ -232,13 +232,23 @@ namespace CulinaryCalculator.Pages
             RecipeStep lastStep = RecipeSteps.LastOrDefault();
             var stepToAdd = new RecipeStep() { Description = StepToAdd, Number = (lastStep?.Number ?? 0) + 1, Recipe = m_Recipe };
             RecipeSteps.Add(stepToAdd);
-            StepToAdd = string.Empty;
-
+            StepToAdd = string.Empty;          
         }
         private void DoDeleteStep(object _)
         {
             RecipeSteps.Remove(SelectedStep);
+            CleanStepNumbers();
         }
+
+        private void CleanStepNumbers()
+        {
+            var orderedSteps = RecipeSteps.OrderBy(s => s.Number).ToList();
+            for (int i=0; i< orderedSteps.Count; i++)
+            {
+                orderedSteps[i].Number = i + 1;
+            }
+        }
+
 
         private void DoDeleteIngredient(object _)
         {
