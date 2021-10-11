@@ -16,7 +16,7 @@
             <Setter Property="TextColor" Value="DarkBlue"/>
         </Style>
         <Style TargetType="Button">
-            <Setter Property="WidthRequest" Value="100"/>
+            <Setter Property="MinimumWidthRequest" Value="100"/>
         </Style>
         <ControlTemplate x:Key="MainPageTemplate">
             <Grid Margin="10, 0, 10, 0">
@@ -47,8 +47,8 @@
 				</Grid.RowDefinitions>
 				<ContentPresenter Grid.Row="0"/>
 				<StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="End">
-                    <Button Command="{TemplateBinding BindingContext.Save}" Text="Сохранить"/>
-                    <Button Command="{TemplateBinding BindingContext.Cancel}" Text="Отмена"/>
+                    <Button WidthRequest="100" Command="{TemplateBinding BindingContext.Save}" Text="Сохранить"/>
+                    <Button WidthRequest="100" Command="{TemplateBinding BindingContext.Cancel}" Text="Отмена"/>
 				</StackLayout>
 			</Grid>
         </ControlTemplate>

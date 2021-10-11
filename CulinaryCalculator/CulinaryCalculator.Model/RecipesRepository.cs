@@ -9,16 +9,20 @@ namespace CulinaryCalculator.Model
 {
     public static class RecipesRepository
     {
-        static readonly string RecipesDBPath;
+        public static string RecipesDBPath
+        {
+            get
+            {
+                var fileName = "Recipes.db";
+                var folder = DependencyService.Get<IPath>().GetDatabaseFolder();
+                return Path.Combine(folder, fileName);
+            }
+        }
 
         public static event EventHandler<Category> CategoryAdded;
 
         static RecipesRepository()
         {
-            var fileName = "Recipes.db";
-            var folder = DependencyService.Get<IPath>().GetDatabaseFolder();
-            RecipesDBPath = Path.Combine(folder, fileName);
-
             if (!File.Exists(RecipesDBPath))
             {
                 File.Create(RecipesDBPath);
@@ -54,6 +58,23 @@ namespace CulinaryCalculator.Model
             using (var db = new RecipesContext(RecipesDBPath))
             {
                 db.Categories.Update(category);
+                db.SaveChanges();
+            }
+        }
+
+        public static Settings GetSettings()
+        {
+            using (var db = new RecipesContext(RecipesDBPath))
+            {
+                return db.Settings.First();
+            }
+        }
+
+        public static void UpdateSettings(Settings settings)
+        {
+            using (var db = new RecipesContext(RecipesDBPath))
+            {
+                db.Settings.Update(settings);
                 db.SaveChanges();
             }
         }

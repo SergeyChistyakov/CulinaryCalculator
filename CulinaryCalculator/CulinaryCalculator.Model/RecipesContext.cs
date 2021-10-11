@@ -5,6 +5,8 @@ namespace CulinaryCalculator.Model
     public class RecipesContext : DbContext
     {
         private readonly string m_DatabasePath;
+
+        public DbSet<Settings> Settings { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
 
@@ -34,6 +36,10 @@ namespace CulinaryCalculator.Model
                 .HasOne(rs => rs.Recipe)
                 .WithMany(r => r.IngredientItems)
                 .OnDelete(DeleteBehavior.ClientCascade);
+
+
+            var settingsBuilder = modelBuilder.Entity<Settings>();
+            settingsBuilder.HasData(new Settings() { Id = 1, Login = null, Password = null, ServerUrl = "http://localhost:9497", UseCloud = false });
 
             var categoryBuilder = modelBuilder.Entity<Category>();
             categoryBuilder.HasData(new Category() { Id = 1, Title = "Пироги", Image = ReadBinaryFromResource("meatpie.jpg") });
@@ -69,7 +75,7 @@ namespace CulinaryCalculator.Model
             ingredientItemBuilder.HasData(new IngredientItem() { Id = 4, RecipeId = 1, Title = "соль", Unit = UnitOfMeasure.TeaSpoon, Quantity = 0.5 });
             ingredientItemBuilder.HasData(new IngredientItem() { Id = 5, RecipeId = 1, Title = "яйцо ", Unit = UnitOfMeasure.Item, Quantity = 1 });
             ingredientItemBuilder.HasData(new IngredientItem() { Id = 6, RecipeId = 1, Title = "кунжут ", Unit = UnitOfMeasure.TableSpoon, Quantity = 1 });
-            ingredientItemBuilder.HasData(new IngredientItem() { Id = 7, RecipeId = 1, Title = "свинина", Unit = UnitOfMeasure.Gram, Quantity = 400 });           
+            ingredientItemBuilder.HasData(new IngredientItem() { Id = 7, RecipeId = 1, Title = "свинина", Unit = UnitOfMeasure.Gram, Quantity = 400 });
             ingredientItemBuilder.HasData(new IngredientItem() { Id = 8, RecipeId = 1, Title = "репчатый лук", Unit = UnitOfMeasure.Item, Quantity = 2 });
             ingredientItemBuilder.HasData(new IngredientItem() { Id = 9, RecipeId = 1, Title = "зелень", Unit = UnitOfMeasure.TableSpoon, Quantity = 3 });
             ingredientItemBuilder.HasData(new IngredientItem() { Id = 10, RecipeId = 1, Title = "сливки", Unit = UnitOfMeasure.TableSpoon, Quantity = 3 });

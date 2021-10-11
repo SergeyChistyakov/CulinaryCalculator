@@ -8,6 +8,37 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Style="{StaticResource Header1Label}" Grid.Row="0" Text="Настройка"/>
+                <StackLayout Orientation="Horizontal" Grid.Row="1">
+                    <RadioButton IsChecked="{Binding UseDisk}" Content="Диск" />
+                    <RadioButton IsChecked="{Binding UseCloud}" Content="Кулинарное облако" />
+                </StackLayout>
+                <StackLayout IsVisible="{Binding UseCloud}" Grid.Row="2" Orientation="Vertical">
+                    <Label Text="Url Облака:"/>
+                    <Entry Text="{Binding ServerUrl}"/>
+                    <Label Text="Логин:"/>
+                    <Entry Text="{Binding Login}"/>
+                    <Label Text="Пароль:"/>
+                    <Entry IsPassword="True" Text="{Binding Password}"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Button Command="{Binding SignIn}" Text="Войти"/>
+                        <Button Command="{Binding SignUp}" Text="Регистрировать"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Button Command="{Binding UploadToCloud}" Text="Сохранить в облако"/>
+                        <Button Command="{Binding RestoreFromCloud}" Text="Восстановить из облака"/>
+                    </StackLayout>
+                </StackLayout>
+                <Label Grid.Row="3" IsVisible="{Binding HasError}" Text="{Binding ErrorText}" TextColor="Red" />
+                <Label Grid.Row="3" IsVisible="{Binding Succeded}" Text="{Binding SucceededText}" TextColor="Green" />
+            </Grid>
             <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="End">
                 <Button Command="{Binding Save}" Text="Сохранить"/>
                 <Button Command="{Binding Cancel}" Text="Отмена"/>
