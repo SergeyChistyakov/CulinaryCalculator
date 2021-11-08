@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulinaryCalculator.UWP", "CulinaryCalculator\CulinaryCalculator.UWP\CulinaryCalculator.UWP.csproj", "{CF76E4AA-BD92-43CD-9A08-A183A6AE4861}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulinaryCalculator.UWP", "CulinaryCalculator.UWP\CulinaryCalculator.UWP.csproj", "{CF76E4AA-BD92-43CD-9A08-A183A6AE4861}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulinaryCalculator.Android", "CulinaryCalculator\CulinaryCalculator.Android\CulinaryCalculator.Android.csproj", "{CCEB5FB8-5E79-49F9-98DE-DE8DBA58B673}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulinaryCalculator.Android", "CulinaryCalculator.Android\CulinaryCalculator.Android.csproj", "{CCEB5FB8-5E79-49F9-98DE-DE8DBA58B673}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulinaryCalculator.iOS", "CulinaryCalculator\CulinaryCalculator.iOS\CulinaryCalculator.iOS.csproj", "{27F65B24-8316-4CD2-885A-16B336690FD1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulinaryCalculator.iOS", "CulinaryCalculator.iOS\CulinaryCalculator.iOS.csproj", "{27F65B24-8316-4CD2-885A-16B336690FD1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulinaryCalculator", "CulinaryCalculator\CulinaryCalculator\CulinaryCalculator.csproj", "{96DE0290-87D7-4F42-8322-E2A02848885F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulinaryCalculator", "CulinaryCalculator\CulinaryCalculator.csproj", "{96DE0290-87D7-4F42-8322-E2A02848885F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulinaryCalculator.Model", "CulinaryCalculator\CulinaryCalculator.Model\CulinaryCalculator.Model.csproj", "{B214537B-8956-46A0-BFF9-DF344BA7063B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulinaryCalculator.Model", "CulinaryCalculator.Model\CulinaryCalculator.Model.csproj", "{B214537B-8956-46A0-BFF9-DF344BA7063B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulinaryCloud", "CulinaryCalculator\CulinaryCloud\CulinaryCloud.csproj", "{1E72F59A-67F5-4B22-B246-7D7C4428EB11}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulinaryCloud", "CulinaryCloud\CulinaryCloud.csproj", "{1E72F59A-67F5-4B22-B246-7D7C4428EB11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
